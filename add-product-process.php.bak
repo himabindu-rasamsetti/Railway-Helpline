@@ -1,0 +1,53 @@
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <?php
+session_start();
+$conn = mysqli_connect('sql304.epizy.com', 'epiz_31635742', 'W1W9DcNFcwAyVV' , 'epiz_31635742_rail');
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+if (($_SESSION["cat"]))
+ {
+$category  = $_SESSION["cat"];
+$fname  = $_SESSION["fname"];
+$email  = $_SESSION["email"];
+$mobile  = $_SESSION["mobile"];
+
+$cat = $_POST["product"];
+$price = $_POST["price"];
+$quantity = $_POST["quantity"];
+
+
+$sql = "INSERT INTO product(pfname,pname,pprice,pquantity)  VALUES ('$fname','$cat','$price','$quantity')";
+echo $sql;
+
+
+if (mysqli_query($conn, $sql)) {
+   echo "successfull: " . header('Location: farmer.php');
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+
+*/
+
+ }
+	else 
+	{
+		header('Location: error.html');    
+	}
+
+mysqli_close($conn);
+
+?>

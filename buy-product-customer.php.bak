@@ -1,0 +1,50 @@
+
+ 
+ 
+ 
+<?php
+session_start();
+$conn = mysqli_connect('sql304.epizy.com', 'epiz_31635742', 'W1W9DcNFcwAyVV' , 'epiz_31635742_rail');
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+if (($_SESSION["cat"]))
+ {
+$category  = $_SESSION["cat"];
+$fname  = $_SESSION["fname"];
+$email  = $_SESSION["email"];
+$mobile  = $_SESSION["mobile"];
+
+$id = $_GET["id"];
+
+$sql = " SELECT * FROM dealer_products WHERE did = $id  ";
+echo $sql;
+
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_assoc($result);
+
+$dealer = $row['dname'];
+$farmer = $row['dfname'];
+$product = $row['dfproduct'];
+$price = $row['dfprice'];
+$qty = $row['dfquantity'];
+
+
+$sql1 = "INSERT INTO customer_products(cname, cdname, cdfname, cdfproduct, cdfprice, cdfquantity)  VALUES ('$fname','$dealer','$farmer','$product','$price','$qty')";
+echo $sql;
+echo $sql1;
+
+if (mysqli_query($conn, $sql1)) {
+   echo "successfull: " . header('Location: customer-buy-products.php');
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+ }
+	else 
+	{
+		header('Location: error.html');    
+	}
+
+mysqli_close($conn);
+
+?>
